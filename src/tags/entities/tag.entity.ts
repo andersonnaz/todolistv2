@@ -11,9 +11,9 @@ export class Tag {
     @ManyToMany(() => Task, (task) => task.tags)
     tasks: Task[]
 
-    @Column()
-    created_at: Date;
+    // @Column()
+    // created_at: Date;
 
-    @Column()
-    deleted_at: Date;
+    // @Column()
+    // deleted_at: Date;
 }

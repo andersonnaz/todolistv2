@@ -1,16 +1,22 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { identity } from 'rxjs';
-
+import { TasksService } from './tasks.service';
 @Controller('tasks')
 export class TasksController {
+    constructor(private readonly tasksService: TasksService){}
+
     @Get()
     findAll(){
-        return {message: 'all tasks'};
+        return this.tasksService.findAll();
     }
 
     @Post()
-    create(@Body() body) {
-        return {body};
+    async create(@Body() body : any) {
+        try {
+            const result = await this.tasksService.create(body);
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
 
     @Get(':id')
