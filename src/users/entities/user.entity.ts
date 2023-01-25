@@ -17,7 +17,7 @@ export class User {
 
     @JoinTable()
     @OneToMany(() => Task, (task) => task.user, {
-        cascade: true
+        onDelete: "CASCADE"
     })
     tasks: Task[];
 
