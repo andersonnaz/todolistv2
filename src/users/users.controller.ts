@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { identity } from 'rxjs';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -12,9 +13,9 @@ export class UsersController {
     }
 
     @Post()
-    async create(@Body() body) {
+    async create(@Body() createUserDto: CreateUserDto) {
         try {
-            const result = await this.userService.create(body);
+            const result = await this.userService.create(createUserDto);
             return result;
         } catch (error) {
             return error;
@@ -22,9 +23,9 @@ export class UsersController {
     }
 
     @Put(':id')
-    async update(@Param('id') id, @Body() body) {
+    async update(@Param('id') id, @Body() updateUserDto: UpdateUserDto) {
         try {
-            const result = await this.userService.update(id, body);
+            const result = await this.userService.update(id, updateUserDto);
             return result;
         } catch (error) {
             return error;
