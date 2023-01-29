@@ -14,7 +14,9 @@ export class Task {
     description: string;
 
     @JoinTable({name: 'tasks_tags'})
-    @ManyToMany(() => Tag, (tag) => tag.tasks)
+    @ManyToMany(() => Tag, (tag) => tag.tasks, {
+        cascade: true
+    })
     tags: Tag[];
 
     @ManyToOne(() => User, (user) => user.tasks, {
