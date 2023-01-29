@@ -1,6 +1,6 @@
 import { Tag } from "src/tags/entities/tag.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tasks')
 export class Task {
@@ -13,7 +13,7 @@ export class Task {
     @Column()
     description: string;
 
-    @JoinTable()
+    @JoinTable({name: 'tasks_tags'})
     @ManyToMany(() => Tag, (tag) => tag.tasks)
     tags: Tag[];
 
@@ -22,9 +22,9 @@ export class Task {
     })
     user: User;
 
-    @Column()
+    @CreateDateColumn({type: 'timestamp'})
     created_at: Date;
 
-    @Column()
+    @CreateDateColumn({type: 'timestamp'})
     deleted_at: Date;
 }

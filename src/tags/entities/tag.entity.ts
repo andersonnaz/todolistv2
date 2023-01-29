@@ -1,5 +1,5 @@
 import { Task } from "src/tasks/entities/task.entity";
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 @Entity('tags')
 export class Tag {
     @PrimaryGeneratedColumn('uuid')
@@ -11,9 +11,9 @@ export class Tag {
     @ManyToMany(() => Task, (task) => task.tags)
     tasks: Task[]
 
-    // @Column()
-    // created_at: Date;
+    @CreateDateColumn({type: 'timestamp'})
+    created_at: Date;
 
-    // @Column()
-    // deleted_at: Date;
+    @CreateDateColumn({type: 'timestamp'})
+    deleted_at: Date;
 }

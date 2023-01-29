@@ -1,5 +1,5 @@
 import { Task } from "src/tasks/entities/task.entity";
-import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -21,9 +21,9 @@ export class User {
     })
     tasks: Task[];
 
-    @Column()
+    @CreateDateColumn({type: 'timestamp'})
     created_at: Date;
 
-    @Column()
+    @CreateDateColumn({type: 'timestamp'})
     deleted_at: Date;
 }
