@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Task } from './entities/task.entity';
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,13 +8,13 @@ import { User } from 'src/users/entities/user.entity';
 @Injectable()
 export class TasksService {
     constructor(
-        @InjectRepository(Task)
+        @Inject('TASKS_REPOSITORY')
         private readonly taskRepository: Repository<Task>,
 
-        @InjectRepository(Tag)
+        @Inject('TAGS_REPOSITORY')
         private readonly tagRepository: Repository<Tag>,
 
-        @InjectRepository(User)
+        @Inject('USERS_REPOSITORY')
         private readonly userRepository: Repository<User>
     ){}
 
@@ -45,7 +45,7 @@ export class TasksService {
     }
 
     private async preloadTagByName(name: string): Promise<Tag> {
-        const tag = await this.tagRepository.findOne({name});
+        const tag = await this.tagRepository.findOne({where: {name}});
         if(tag){
             return tag;
         }
