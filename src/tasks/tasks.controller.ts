@@ -23,20 +23,32 @@ export class TasksController {
     }
 
     @Get(':id')
-    findById(@Param('id') id : string){
-        return {id}
+    async findById(@Param('id') id : string){
+        try {
+            const result = await this.tasksService.findById(id);
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
 
     @Put(':id')
-    update(@Param('id') id : string, @Body() updateTaskDto: UpdateTaskDto){
-        return {id, updateTaskDto}
+    async update(@Param('id') id : string, @Body() updateTaskDto: UpdateTaskDto){
+        try {
+            const result = await this.tasksService.update(id, updateTaskDto);
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
 
     @Delete(':id')
-    remove(@Param('id') id : string){
-        return `delete ${id}`
+    async remove(@Param('id') id : string){
+        try {
+            const result = await this.tasksService.remove(id);
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
-
-
-
 }
