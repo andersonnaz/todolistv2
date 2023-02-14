@@ -48,21 +48,31 @@ export class TasksService {
     }
 
     async findById(id: string){
-        const user = await this.userRepository.findOne({where: {id}});
-        if(!user){
-            throw new NotFoundException('user not found');
+        const task = await this.taskRepository.findOne({
+            where: {id},
+            relations: ['tags']
+        });
+        if(!task){
+            throw new NotFoundException('task not found');
         }
-        return user;
+        return task;
     }
 
-    async update(id: string, updateTaskDto: any){
+    async update(id: string, updateTaskDto: UpdateTaskDto){
         const task = await this.taskRepository.findOne({where: {id}});
         if(!task){
             throw new NotFoundException('task not found');
         }
+        const tags = updateTaskDto.tags? await Promise.all(
+            updateTaskDto.tags?.map((name) => {
+                return this.preloadTagByName(name);
+            })
+        ): task.tags;
         const result = await this.taskRepository.preload({
             id,
-            ...updateTaskDto
+            ...updateTaskDto,
+            user: task.user,
+            tags
         });
         return this.taskRepository.save(result);
     }

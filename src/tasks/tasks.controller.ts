@@ -18,7 +18,7 @@ export class TasksController {
             const result = await this.tasksService.create(createTaskDto);
             return result;
         } catch (error) {
-            return error;
+            throw error;
         }
     }
 
@@ -28,7 +28,7 @@ export class TasksController {
             const result = await this.tasksService.findById(id);
             return result;
         } catch (error) {
-            return error;
+            throw error;
         }
     }
 
@@ -38,7 +38,7 @@ export class TasksController {
             const result = await this.tasksService.update(id, updateTaskDto);
             return result;
         } catch (error) {
-            return error;
+            throw error;
         }
     }
 
@@ -48,7 +48,7 @@ export class TasksController {
             const result = await this.tasksService.remove(id);
             return result;
         } catch (error) {
-            return error;
+            throw error;
         }
     }
 }
